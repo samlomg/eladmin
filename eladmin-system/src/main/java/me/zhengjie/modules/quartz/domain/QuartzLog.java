@@ -38,24 +38,30 @@ public class QuartzLog implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "任务名称", hidden = true)
+    @Column(name = "job_name")
     private String jobName;
 
     @ApiModelProperty(value = "bean名称", hidden = true)
+    @Column(name = "bean_name")
     private String beanName;
 
     @ApiModelProperty(value = "方法名称", hidden = true)
+    @Column(name = "method_name")
     private String methodName;
 
     @ApiModelProperty(value = "参数", hidden = true)
     private String params;
 
     @ApiModelProperty(value = "cron表达式", hidden = true)
+    @Column(name = "cron_expression")
     private String cronExpression;
 
     @ApiModelProperty(value = "状态", hidden = true)
+    @Column(name = "is_success")
     private Boolean isSuccess;
 
     @ApiModelProperty(value = "异常详情", hidden = true)
+    @Column(name = "exception_detail")
     private String exceptionDetail;
 
     @ApiModelProperty(value = "执行耗时", hidden = true)
@@ -63,5 +69,6 @@ public class QuartzLog implements Serializable {
 
     @CreationTimestamp
     @ApiModelProperty(value = "创建时间", hidden = true)
+    @Column(name = "create_time")
     private Timestamp createTime;
 }

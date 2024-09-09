@@ -1,29 +1,41 @@
 # 配置 quartz 分布式支持, sql 文件在 sql 目录下，需要导入到数据库，并且需要修改 application.yml 文件的 active: dev 配置
 spring:
   quartz:
-    # 必需，指定使用 JDBC 存储
+    #数据库方式
     job-store-type: jdbc
+    #相关属性配置
     properties:
       org:
         quartz:
           scheduler:
-            # 必需，指定调度器实例的名称
             instanceName: eladmin
-            # 必需，指定调度器实例的 ID
-            instanceId: auto
-          threadPool:
-            # 可选，线程池的线程数量，可以根据需要调整
-            threadCount: 5
+            instanceId: AUTO
           jobStore:
-            # 可选，如果你不需要集群，可以去掉
-            isClustered: true
-            # 可选，集群检查间隔时间，可以根据需要调整
-            clusterCheckinInterval: 10000
-            # 必需，指定 JDBC 驱动代理类
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-            # 可选，是否使用属性存储，可以根据需要调整
+            tablePrefix: QRTZ_
+            #自定义的数据源别名，与最下方一致
+            dataSource: qzDB
+            #与cron的调度有关，忽略重启期间的任务
+            misfireThreshold: 1000
+            #设置为true开启集群
+            isClustered: false
+            clusterCheckinInterval: 10000
+            #如果开启，会没法给任务传参数
             useProperties: false
-            # 必需，指定表的前缀
-            tablePrefix: qrtz_
-            # 可选，指定误触发阈值，可以根据需要调整
-            misfireThreshold: 60000
+            #避免集群环境下job重复执行
+            acquireTriggersWithinLock: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          dataSource:
+            qzDB:
+              #这里是坑点了，这个Druild连接类要自己提供，本文会在下方提供
+              connectionProvider.class: me.zhengjie.config.db.DruidConnectionProvider
+              maxConnection: 10
+              driver: com.mysql.cj.jdbc.Driver
+              URL: jdbc:log4jdbc:mysql://${DB_ELADMIN_HOST:localhost}:${DB_ELADMIN_PORT:3306}/${DB_ELADMIN_NAME:eladmin}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+              user: ${DB_ELADMIN_USER:root}
+              password: ${DB_ELADMIN_PWD:123456}

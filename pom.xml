@@ -113,6 +113,14 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--SQLServer依赖包-->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>8.2.2.jre8</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- druid数据源驱动 -->
         <dependency>
             <groupId>com.alibaba</groupId>

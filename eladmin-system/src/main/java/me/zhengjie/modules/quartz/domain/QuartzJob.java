@@ -47,14 +47,17 @@ public class QuartzJob extends BaseEntity implements Serializable {
     private String uuid;
 
     @ApiModelProperty(value = "定时器名称")
+    @Column(name = "job_name")
     private String jobName;
 
     @NotBlank
     @ApiModelProperty(value = "Bean名称")
+    @Column(name = "bean_name")
     private String beanName;
 
     @NotBlank
     @ApiModelProperty(value = "方法名称")
+    @Column(name = "method_name")
     private String methodName;
 
     @ApiModelProperty(value = "参数")
@@ -62,21 +65,26 @@ public class QuartzJob extends BaseEntity implements Serializable {
 
     @NotBlank
     @ApiModelProperty(value = "cron表达式")
+    @Column(name = "cron_expression")
     private String cronExpression;
 
     @ApiModelProperty(value = "状态，暂时或启动")
+    @Column(name = "is_pause")
     private Boolean isPause = false;
 
     @ApiModelProperty(value = "负责人")
+    @Column(name = "person_in_charge")
     private String personInCharge;
 
     @ApiModelProperty(value = "报警邮箱")
     private String email;
 
     @ApiModelProperty(value = "子任务")
+    @Column(name = "sub_task")
     private String subTask;
 
     @ApiModelProperty(value = "失败后暂停")
+    @Column(name = "pause_after_failure")
     private Boolean pauseAfterFailure;
 
     @NotBlank
