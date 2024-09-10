@@ -29,5 +29,6 @@ public interface GenConfigRepository extends JpaRepository<GenConfig,Long> {
      * @param tableName 表名
      * @return /
      */
-    GenConfig findByTableName(String tableName);
+    GenConfig findByTableNameAndDataBaseId(String tableName, String dataBaseId);
+
 }

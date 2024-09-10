@@ -21,9 +21,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-      naming:
-        physical-strategy: me.zhengjie.config.db.CustomPhysicalNamingStrategy
-    #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     open-in-view: true
 
   redis:

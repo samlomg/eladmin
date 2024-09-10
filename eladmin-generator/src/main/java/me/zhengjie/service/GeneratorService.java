@@ -34,11 +34,9 @@ public interface GeneratorService {
     /**
      * 查询数据库元数据
      * @param name 表名
-     * @param startEnd 分页参数
      * @return /
      */
-    PageResult<TableInfo> getTables(String name, int[] startEnd);
-
+    PageResult<TableInfo> getTables(String name, String dataBaseId, int page, int size);
     /**
      * 得到数据表的元数据
      * @param name 表名
@@ -46,6 +44,7 @@ public interface GeneratorService {
      */
     List<ColumnInfo> getColumns(String name);
 
+    List<ColumnInfo> getColumns(String name, String dataBaseId);
     /**
      * 同步表数据
      * @param columnInfos /
@@ -59,11 +58,6 @@ public interface GeneratorService {
      */
     void save(List<ColumnInfo> columnInfos);
 
-    /**
-     * 获取所有table
-     * @return /
-     */
-    Object getTables();
 
     /**
      * 代码生成
@@ -95,4 +89,6 @@ public interface GeneratorService {
      * @return /
      */
     List<ColumnInfo> query(String table);
+
+    List<ColumnInfo> query(String table, String dataBaseId);
 }

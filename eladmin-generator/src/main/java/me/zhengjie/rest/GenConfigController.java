@@ -38,9 +38,9 @@ public class GenConfigController {
     private final GenConfigService genConfigService;
 
     @ApiOperation("查询")
-    @GetMapping(value = "/{tableName}")
-    public ResponseEntity<GenConfig> queryGenConfig(@PathVariable String tableName){
-        return new ResponseEntity<>(genConfigService.find(tableName), HttpStatus.OK);
+    @GetMapping(value = "/{tableName}/{dataBaseId}")
+    public ResponseEntity<GenConfig> queryGenConfig(@PathVariable String tableName, @PathVariable String dataBaseId){
+        return new ResponseEntity<>(genConfigService.find(tableName,dataBaseId), HttpStatus.OK);
     }
 
     @PutMapping

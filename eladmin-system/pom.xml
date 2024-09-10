@@ -32,12 +32,13 @@
             </exclusions>
         </dependency>
 
-        <!-- tools 模块包含了 common 和 logging 模块 -->
+        <!-- eladmin-business 模块包含了 tools common 和 logging 模块 -->
         <dependency>
-            <groupId>me.zhengjie</groupId>
-            <artifactId>eladmin-tools</artifactId>
+            <groupId>com.dglbc</groupId>
+            <artifactId>eladmin-business</artifactId>
             <version>2.7</version>
         </dependency>
+
 
         <!-- Spring boot websocket -->
 		<dependency>

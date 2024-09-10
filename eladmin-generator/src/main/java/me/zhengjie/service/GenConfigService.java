@@ -28,7 +28,8 @@ public interface GenConfigService {
      * @param tableName 表名
      * @return 表配置
      */
-    GenConfig find(String tableName);
+    GenConfig find(String tableName, String dataBaseId);
+
 
     /**
      * 更新表配置

@@ -41,15 +41,19 @@ public class ColumnInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "table_name")
     @ApiModelProperty(value = "表名")
     private String tableName;
 
+    @Column(name = "column_name")
     @ApiModelProperty(value = "数据库字段名称")
     private String columnName;
 
+    @Column(name = "column_type")
     @ApiModelProperty(value = "数据库字段类型")
     private String columnType;
 
+    @Column(name = "key_type")
     @ApiModelProperty(value = "数据库字段键类型")
     private String keyType;
 
@@ -59,26 +63,37 @@ public class ColumnInfo implements Serializable {
     @ApiModelProperty(value = "数据库字段描述")
     private String remark;
 
+    @Column(name = "not_null")
     @ApiModelProperty(value = "是否必填")
     private Boolean notNull;
 
+    @Column(name = "list_show")
     @ApiModelProperty(value = "是否在列表显示")
     private Boolean listShow;
 
+    @Column(name = "form_show")
     @ApiModelProperty(value = "是否表单显示")
     private Boolean formShow;
 
+    @Column(name = "form_type")
     @ApiModelProperty(value = "表单类型")
     private String formType;
 
+    @Column(name = "query_type")
     @ApiModelProperty(value = "查询 1:模糊 2：精确")
     private String queryType;
 
+    @Column(name = "dict_name")
     @ApiModelProperty(value = "字典名称")
     private String dictName;
 
+    @Column(name = "date_annotation")
     @ApiModelProperty(value = "日期注解")
     private String dateAnnotation;
+
+    @Column(name = "data_base_id")
+    @ApiModelProperty(value = "数据库ID")
+    private String dataBaseId;
 
     public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra) {
         this.tableName = tableName;
@@ -93,5 +108,25 @@ public class ColumnInfo implements Serializable {
         this.remark = remark;
         this.listShow = true;
         this.formShow = true;
+    }
+
+    public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra,String dataBaseId) {
+        this.tableName = tableName;
+        this.columnName = columnName;
+        this.columnType = columnType;
+        this.keyType = keyType;
+        this.extra = extra;
+        this.notNull = notNull;
+        if(GenUtil.PK.equalsIgnoreCase(keyType) && GenUtil.EXTRA.equalsIgnoreCase(extra)){
+            this.notNull = false;
+        }
+        this.remark = remark;
+        this.listShow = true;
+        this.formShow = true;
+        this.dataBaseId = dataBaseId;
+    }
+
+    public String getDataBaseId() {
+        return dataBaseId == null ? "local" : dataBaseId;
     }
 }

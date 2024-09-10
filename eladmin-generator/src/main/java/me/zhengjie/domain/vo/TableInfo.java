@@ -44,5 +44,31 @@ public class TableInfo {
     /** 备注 */
     private Object remark;
 
+    /** 数据库ID */
+    private Object dataBaseId;
 
+
+    public TableInfo(Object tableName, Object createTime, Object engine, Object coding, Object remark) {
+        this.tableName = tableName;
+        this.createTime = createTime;
+        this.engine = engine;
+        this.coding = coding;
+        this.remark = remark;
+    }
+
+    /**
+     *
+     * @param tableName 表名
+     * @param createTime 生成时间
+     * @param remark 备注
+     */
+    public TableInfo(Object tableName, Object createTime, Object remark) {
+        this.tableName = tableName;
+        this.createTime = createTime;
+        this.remark = remark;
+    }
+
+    public Object getDataBaseId() {
+        return dataBaseId == null ? "local" : dataBaseId;
+    }
 }

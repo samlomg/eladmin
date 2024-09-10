@@ -49,25 +49,20 @@ public class GeneratorController {
     @Value("${generator.enabled}")
     private Boolean generatorEnabled;
 
-    @ApiOperation("查询数据库数据")
-    @GetMapping(value = "/tables/all")
-    public ResponseEntity<Object> queryAllTables(){
-        return new ResponseEntity<>(generatorService.getTables(), HttpStatus.OK);
-    }
 
     @ApiOperation("查询数据库数据")
     @GetMapping(value = "/tables")
     public ResponseEntity<PageResult<TableInfo>> queryTables(@RequestParam(defaultValue = "") String name,
+                                                             @RequestParam(defaultValue = "") String dataBaseId,
                                                              @RequestParam(defaultValue = "0")Integer page,
                                                              @RequestParam(defaultValue = "10")Integer size){
-        int[] startEnd = PageUtil.transToStartEnd(page, size);
-        return new ResponseEntity<>(generatorService.getTables(name,startEnd), HttpStatus.OK);
+        return new ResponseEntity<>(generatorService.getTables(name, dataBaseId, page, size), HttpStatus.OK);
     }
 
     @ApiOperation("查询字段数据")
     @GetMapping(value = "/columns")
-    public ResponseEntity<PageResult<ColumnInfo>> queryColumns(@RequestParam String tableName){
-        List<ColumnInfo> columnInfos = generatorService.getColumns(tableName);
+    public ResponseEntity<PageResult<ColumnInfo>> queryColumns(@RequestParam String tableName, @RequestParam(defaultValue = "local") String dataBaseId){
+        List<ColumnInfo> columnInfos = generatorService.getColumns(tableName, dataBaseId);
         return new ResponseEntity<>(PageUtil.toPage(columnInfos,columnInfos.size()), HttpStatus.OK);
     }
 
@@ -79,28 +74,29 @@ public class GeneratorController {
     }
 
     @ApiOperation("同步字段数据")
-    @PostMapping(value = "sync")
-    public ResponseEntity<HttpStatus> syncColumn(@RequestBody List<String> tables){
+    @PostMapping(value = "sync/{tables}/{dataBaseId}")
+    public ResponseEntity<HttpStatus> syncColumn(@PathVariable List<String> tables, @PathVariable String dataBaseId) {
         for (String table : tables) {
-            generatorService.sync(generatorService.getColumns(table), generatorService.query(table));
+            generatorService.sync(generatorService.getColumns(table, dataBaseId), generatorService.query(table, dataBaseId));
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ApiOperation("生成代码")
-    @PostMapping(value = "/{tableName}/{type}")
-    public ResponseEntity<Object> generatorCode(@PathVariable String tableName, @PathVariable Integer type, HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/{tableName}/{type}/{dataBaseId}")
+    public ResponseEntity<Object> generatorCode(@PathVariable String tableName, @PathVariable Integer type, @PathVariable  String dataBaseId, HttpServletRequest request, HttpServletResponse response){
+        // 注意代码生成不是一定直接可以使用，这里是给开发者带来方便。系统只是一个工具，所以不保证一定能生成代码，也不保证一定能正常运行。
         if(!generatorEnabled && type == 0){
             throw new BadRequestException("此环境不允许生成代码，请选择预览或者下载查看！");
         }
         switch (type){
             // 生成代码
-            case 0: generatorService.generator(genConfigService.find(tableName), generatorService.getColumns(tableName));
+            case 0: generatorService.generator(genConfigService.find(tableName,dataBaseId), generatorService.getColumns(tableName,dataBaseId));
                     break;
             // 预览
-            case 1: return generatorService.preview(genConfigService.find(tableName), generatorService.getColumns(tableName));
+            case 1: return generatorService.preview(genConfigService.find(tableName,dataBaseId), generatorService.getColumns(tableName,dataBaseId));
             // 打包
-            case 2: generatorService.download(genConfigService.find(tableName), generatorService.getColumns(tableName), request, response);
+            case 2: generatorService.download(genConfigService.find(tableName,dataBaseId), generatorService.getColumns(tableName,dataBaseId), request, response);
                     break;
             default: throw new BadRequestException("没有这个选项");
         }

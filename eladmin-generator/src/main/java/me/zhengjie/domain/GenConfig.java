@@ -39,16 +39,23 @@ public class GenConfig implements Serializable {
         this.tableName = tableName;
     }
 
+    public GenConfig(String tableName,String dataBaseId) {
+        this.tableName = tableName;
+        this.dataBaseId = dataBaseId;
+    }
+
     @Id
     @Column(name = "config_id")
     @ApiModelProperty(value = "ID", hidden = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "table_name")
     @NotBlank
     @ApiModelProperty(value = "表名")
     private String tableName;
 
+    @Column(name = "api_alias")
     @ApiModelProperty(value = "接口名称")
     private String apiAlias;
 
@@ -56,6 +63,7 @@ public class GenConfig implements Serializable {
     @ApiModelProperty(value = "包路径")
     private String pack;
 
+    @Column(name = "module_name")
     @NotBlank
     @ApiModelProperty(value = "模块名")
     private String moduleName;
@@ -64,6 +72,7 @@ public class GenConfig implements Serializable {
     @ApiModelProperty(value = "前端文件路径")
     private String path;
 
+    @Column(name = "api_path")
     @ApiModelProperty(value = "前端文件路径")
     private String apiPath;
 
@@ -75,4 +84,9 @@ public class GenConfig implements Serializable {
 
     @ApiModelProperty(value = "是否覆盖")
     private Boolean cover = false;
+
+
+    @Column(name = "data_base_id")
+    @ApiModelProperty(value = "数据库ID")
+    private String dataBaseId ;
 }

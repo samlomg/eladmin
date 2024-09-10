@@ -34,10 +34,10 @@ public class GenConfigServiceImpl implements GenConfigService {
     private final GenConfigRepository genConfigRepository;
 
     @Override
-    public GenConfig find(String tableName) {
-        GenConfig genConfig = genConfigRepository.findByTableName(tableName);
-        if(genConfig == null){
-            return new GenConfig(tableName);
+    public GenConfig find(String tableName, String dataBaseId) {
+        GenConfig genConfig = genConfigRepository.findByTableNameAndDataBaseId(tableName, dataBaseId);
+        if (genConfig == null) {
+            return new GenConfig(tableName, dataBaseId);
         }
         return genConfig;
     }

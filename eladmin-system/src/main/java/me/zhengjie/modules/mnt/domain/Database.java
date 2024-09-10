@@ -42,12 +42,14 @@ public class Database extends BaseEntity implements Serializable {
 	@ApiModelProperty(value = "数据库名称")
     private String name;
 
+    @Column(name = "jdbc_url")
 	@ApiModelProperty(value = "数据库连接地址")
     private String jdbcUrl;
 
 	@ApiModelProperty(value = "数据库密码")
     private String pwd;
 
+    @Column(name = "user_name")
 	@ApiModelProperty(value = "用户名")
     private String userName;
 
