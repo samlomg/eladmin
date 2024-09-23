@@ -20,7 +20,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.modules.system.domain.Dict;
 import me.zhengjie.modules.system.domain.DictDetail;
+import me.zhengjie.modules.system.repository.DictRepository;
 import me.zhengjie.modules.system.service.DictDetailService;
 import me.zhengjie.modules.system.service.dto.DictDetailDto;
 import me.zhengjie.modules.system.service.dto.DictDetailQueryCriteria;
@@ -36,6 +38,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
 * @author Zheng Jie
@@ -46,7 +49,7 @@ import java.util.Map;
 @Api(tags = "系统：字典详情管理")
 @RequestMapping("/api/dictDetail")
 public class DictDetailController {
-
+    private DictRepository dictRepository;
     private final DictDetailService dictDetailService;
     private static final String ENTITY_NAME = "dictDetail";
 
@@ -66,6 +69,29 @@ public class DictDetailController {
             dictMap.put(name, dictDetailService.getDictByName(name));
         }
         return new ResponseEntity<>(dictMap, HttpStatus.OK);
+    }
+
+    @ApiOperation("前台查询字典详情")
+    @GetMapping(value = "/yw")
+    public ResponseEntity<Object> getDictDetailYw(DictDetailQueryCriteria criteria,
+                                                  @PageableDefault(sort = {"dictSort"}, direction = Sort.Direction.ASC) Pageable pageable) {
+
+        //先找出所有的dictName的类型
+        Optional<Dict> options = dictRepository.findByName(criteria.getDictName());
+        if (options.isPresent()) {
+            //如果不是空
+            Dict dict = options.get();
+            if (dict.getDictType() == 1) {
+                //然后找到对应
+                return new ResponseEntity<>(dictDetailService.queryAll(criteria, pageable), HttpStatus.OK);
+            } else {
+                // PageResult<DictDetailDto>
+                return null;
+            }
+        }else {
+            return null;
+        }
+
     }
 
     @Log("新增字典详情")

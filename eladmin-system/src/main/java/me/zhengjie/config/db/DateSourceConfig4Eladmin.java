@@ -6,7 +6,6 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;

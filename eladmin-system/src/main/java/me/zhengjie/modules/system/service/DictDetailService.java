@@ -60,4 +60,14 @@ public interface DictDetailService {
      * @return /
      */
     List<DictDetailDto> getDictByName(String name);
+
+
+    /**
+     * 分页查询
+     * @param criteria
+     * @param pageable
+     * @return
+     */
+    PageResult<DictDetailDto> queryAllDictByName(DictDetailQueryCriteria criteria, Pageable pageable);
+
 }

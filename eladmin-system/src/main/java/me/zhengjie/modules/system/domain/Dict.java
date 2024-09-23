@@ -51,4 +51,16 @@ public class Dict extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "描述")
     private String description;
+
+    @ApiModelProperty(value = "字典类型")
+    @Column(name = "dict_type")
+    private Integer dictType = 1;
+
+    @ApiModelProperty(value = "关联的SQL")
+    @Column(name = "dict_sql")
+    private String dictSql;
+
+    @ApiModelProperty(value = "关联的数据库")
+    @Column(name = "dict_database")
+    private String dictDatabase;
 }
