@@ -95,6 +95,10 @@ public class ColumnInfo implements Serializable {
     @ApiModelProperty(value = "数据库ID")
     private String dataBaseId;
 
+    @Column(name = "column_sort")
+    @ApiModelProperty(value = "权重")
+    private Integer columnSort;
+
     public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra) {
         this.tableName = tableName;
         this.columnName = columnName;
@@ -108,6 +112,7 @@ public class ColumnInfo implements Serializable {
         this.remark = remark;
         this.listShow = true;
         this.formShow = true;
+        this.columnSort = 999;
     }
 
     public ColumnInfo(String tableName, String columnName, Boolean notNull, String columnType, String remark, String keyType, String extra,String dataBaseId) {
@@ -124,6 +129,7 @@ public class ColumnInfo implements Serializable {
         this.listShow = true;
         this.formShow = true;
         this.dataBaseId = dataBaseId;
+        this.columnSort = 999;
     }
 
     public String getDataBaseId() {

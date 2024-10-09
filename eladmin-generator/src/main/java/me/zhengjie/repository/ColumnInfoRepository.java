@@ -30,9 +30,9 @@ public interface ColumnInfoRepository extends JpaRepository<ColumnInfo,Long> {
      * @param tableName 表格名
      * @return 表信息
      */
-    List<ColumnInfo> findByTableNameOrderByIdAsc(String tableName);
+    List<ColumnInfo> findByTableNameOrderByColumnSortAsc(String tableName);
 
-    List<ColumnInfo> findByTableNameAndDataBaseIdOrderByIdAsc(String tableName, String dataBaseId);
+    List<ColumnInfo> findByTableNameAndDataBaseIdOrderByColumnSortAsc(String tableName, String dataBaseId);
 
     void deleteByTableNameAndDataBaseIdAndColumnNameNotIn(String tableName, String dataBaseId, List<String> columnNames);
 

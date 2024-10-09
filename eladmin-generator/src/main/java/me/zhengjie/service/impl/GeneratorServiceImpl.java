@@ -197,7 +197,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public List<ColumnInfo> getColumns(String tableName) {
-        List<ColumnInfo> columnInfos = columnInfoRepository.findByTableNameOrderByIdAsc(tableName);
+        List<ColumnInfo> columnInfos = columnInfoRepository.findByTableNameOrderByColumnSortAsc(tableName);
         if (CollectionUtil.isNotEmpty(columnInfos)) {
             return columnInfos;
         } else {
@@ -208,7 +208,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public List<ColumnInfo> getColumns(String name, String dataBaseId) {
-        List<ColumnInfo> columnInfos = columnInfoRepository.findByTableNameAndDataBaseIdOrderByIdAsc(name,dataBaseId);
+        List<ColumnInfo> columnInfos = columnInfoRepository.findByTableNameAndDataBaseIdOrderByColumnSortAsc(name,dataBaseId);
         if (CollectionUtil.isNotEmpty(columnInfos)) {
             return columnInfos;
         } else {

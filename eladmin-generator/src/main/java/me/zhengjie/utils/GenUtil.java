@@ -184,6 +184,10 @@ public class GenUtil {
         }
     }
 
+    public  static Map<String, Object> getGenMapC(List<ColumnInfo> columnInfos, GenConfig genConfig){
+        return getGenMap(columnInfos,genConfig);
+    }
+
     // 获取模版数据
     private static Map<String, Object> getGenMap(List<ColumnInfo> columnInfos, GenConfig genConfig) {
         // 存储模版字段数据
