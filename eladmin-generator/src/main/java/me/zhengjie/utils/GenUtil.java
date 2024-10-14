@@ -205,7 +205,7 @@ public class GenUtil {
         // 表名
         genMap.put("tableName", genConfig.getTableName());
         // 大写开头的类名
-        String className = StringUtils.toCapitalizeCamelCase(genConfig.getTableName());
+        String className = StringUtils.convertToClassName(genConfig.getTableName(),genConfig.getPrefix());
         // 小写开头的类名
         String changeClassName = StringUtils.toCamelCase(genConfig.getTableName());
         // 判断是否去除表前缀

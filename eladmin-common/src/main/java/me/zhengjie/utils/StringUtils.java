@@ -229,4 +229,42 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             return "";
         }
     }
+
+    /**
+     * 根据数据库表名生成java类名
+     */
+    // 判断是否为驼峰命名
+    private static boolean isCamelCase(String tableName) {
+        // 如果表名不包含下划线，且存在大小写转换，视为驼峰命名
+        return !tableName.contains("_") && !tableName.matches(".*\\d.*_.*") && tableName.matches(".*[a-z]+.*[A-Z]+.*");
+    }
+
+    // 转换表名为Java类名
+    public static String convertToClassName(String tableName,String prefix) {
+        // Step 1: 检查是否为驼峰命名
+        if (isCamelCase(tableName)) {
+            // 如果是驼峰命名，直接返回，确保首字母大写
+            return Character.toUpperCase(tableName.charAt(0)) + tableName.substring(1);
+        }
+
+        // Step 2: 将表名转换为小写，标准化输入
+        tableName = tableName.toLowerCase();
+
+        // Step 3: 去掉无效前缀（如有）
+        tableName = tableName.replaceFirst("^"+prefix, "");
+
+        // Step 4: 处理下划线，将其转换为驼峰格式，同时保留数字
+        String[] parts = tableName.split("_");
+        StringBuilder className = new StringBuilder();
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                // 保留数字，驼峰化字母部分
+                className.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+            }
+        }
+
+        return className.toString();
+    }
+
+    //首位字母小写
 }

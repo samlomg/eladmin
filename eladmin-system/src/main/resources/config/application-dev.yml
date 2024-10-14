@@ -32,6 +32,8 @@ spring:
         test-on-return: false
         # 检测连接是否有效
         validation-query: select 1
+        # 合并多个DruidDataSource的监控数据
+        use-global-data-source-stat: true
       lbc:
         enable: true
         db-type: com.alibaba.druid.pool.DruidDataSource
@@ -64,6 +66,8 @@ spring:
         test-on-return: false
         # 检测连接是否有效
         validation-query: select 1
+        # 合并多个DruidDataSource的监控数据
+        use-global-data-source-stat: true
       # 配置监控统计
       webStatFilter:
         enabled: true
@@ -77,7 +81,7 @@ spring:
           # 记录慢SQL
           log-slow-sql: true
           slow-sql-millis: 1000
-          merge-sql: true
+          merge-sql: false
         wall:
           config:
             multi-statement-allow: true

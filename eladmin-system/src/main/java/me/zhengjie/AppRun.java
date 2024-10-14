@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableAsync
 @RestController
 @Api(hidden = true)
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"me.zhengjie", "cn.shininghouse"})
 @EnableTransactionManagement
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class AppRun {

@@ -28,6 +28,7 @@ import me.zhengjie.exception.EntityExistException;
 import me.zhengjie.utils.ValidationUtil;
 import me.zhengjie.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ${package}.repository.${className}Repository;
 import ${package}.service.${className}Service;
 import ${package}.service.dto.${className}Dto;
@@ -54,12 +55,21 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import me.zhengjie.utils.PageResult;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.util.ListUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 /**
 * @website https://eladmin.vip
 * @description 服务实现
 * @author ${author}
 * @date ${date}
 **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ${className}ServiceImpl implements ${className}Service {
@@ -91,10 +101,10 @@ public class ${className}ServiceImpl implements ${className}Service {
     public void create(${className} resources) {
 <#if !auto && pkColumnType = 'Long'>
         Snowflake snowflake = IdUtil.createSnowflake(1, 1);
-        resources.set${pkCapitalColName}(snowflake.nextId()); 
+        resources.set${pkCapitalColName}(snowflake.nextId());
 </#if>
 <#if !auto && pkColumnType = 'String'>
-        resources.set${pkCapitalColName}(IdUtil.simpleUUID()); 
+        resources.set${pkCapitalColName}(IdUtil.simpleUUID());
 </#if>
 <#if columns??>
     <#list columns as column>
@@ -154,5 +164,52 @@ public class ${className}ServiceImpl implements ${className}Service {
             list.add(map);
         }
         FileUtil.downloadExcel(list, response);
+    }
+
+    @Override
+    public void downloadExcel(HttpServletResponse response) throws IOException {
+        ${className}Dto ${changeClassName}Dto = new ${className}Dto();
+
+        //response为HttpServletResponse对象
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+        response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
+        OutputStream outputStream = response.getOutputStream();
+        EasyExcel.write(outputStream, ${className}Dto.class).sheet("s1").doWrite(Arrays.asList(${changeClassName}Dto));
+        IoUtil.close(outputStream);
+    }
+
+    @Override
+    public void importExcel(MultipartFile file) throws IOException {
+    EasyExcel.read(file.getInputStream(), ${className}Dto.class,
+        new ReadListener<${className}Dto>() {
+
+            /**
+            * 单次缓存的数据量
+            */
+            public static final int BATCH_COUNT = 100;
+            /**
+            *临时存储
+            */
+            private List<${changeClassName}> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+
+                @Override
+                public void invoke(${className}Dto o, AnalysisContext analysisContext) {
+                    ${changeClassName} ${changeClassName}= ${changeClassName}Mapper.toEntity(o);
+                    cachedDataList.add(${changeClassName});
+                    saveData(${changeClassName});
+                }
+
+                @Override
+                public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+
+                }
+
+                private void saveData(${changeClassName} o) {
+                    log.info("{}条数据，开始存储数据库！", cachedDataList.size());
+                    ${changeClassName}Repository.save(o);
+                    log.info("存储数据库成功！");
+                }
+            }).sheet("s1").doRead();
     }
 }

@@ -31,6 +31,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import me.zhengjie.utils.PageResult;
 import ${package}.service.dto.${className}Dto;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
 * @website https://eladmin.vip
@@ -86,5 +87,21 @@ public class ${className}Controller {
     public ResponseEntity<Object> delete${className}(@RequestBody ${pkColumnType}[] ids) {
         ${changeClassName}Service.deleteAll(ids);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping(value = "/importExcel")
+    @Log("批量导入${apiAlias}")
+    @ApiOperation("批量导入${apiAlias}")
+    @PreAuthorize("@el.check('${changeClassName}:add')")
+    public ResponseEntity<Object> importExcel(@Validated @RequestBody MultipartFile file) throws IOException {
+        ${changeClassName}Service.importExcel(file);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/downloadExcel")
+    @Log("导入模板${apiAlias}")
+    @ApiOperation("导入模板${apiAlias}")
+    @PreAuthorize("@el.check('${changeClassName}:add')")
+    public void downloadExcel(HttpServletResponse response) throws IOException {
+         ${changeClassName}Service.downloadExcel(response);
     }
 }

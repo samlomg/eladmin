@@ -24,6 +24,7 @@ import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import me.zhengjie.utils.PageResult;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
 * @website https://eladmin.vip
@@ -80,4 +81,18 @@ public interface ${className}Service {
     * @throws IOException /
     */
     void download(List<${className}Dto> all, HttpServletResponse response) throws IOException;
+
+    /**
+    * 下载模板
+    * @param response
+    * @throws IOException
+    */
+    void downloadExcel( HttpServletResponse response) throws IOException;
+
+    /**
+    * 导入模板
+    * @param file
+    * @throws IOException
+    */
+    void importExcel( MultipartFile file) throws IOException;
 }

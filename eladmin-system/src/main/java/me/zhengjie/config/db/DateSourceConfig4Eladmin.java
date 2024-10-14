@@ -1,6 +1,7 @@
 package me.zhengjie.config.db;
 
 
+import com.alibaba.druid.DbType;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.commons.collections4.map.HashedMap;
@@ -42,6 +43,7 @@ public class DateSourceConfig4Eladmin {
     @ConfigurationProperties("spring.datasource.druid.eladmin")
     public javax.sql.DataSource eladminDataSource() {
         DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+        dataSource.setDbType(DbType.mariadb);
         System.out.println("eladmin:数据库dbtype：" + dataSource.getDbType());
         return dataSource;
     }

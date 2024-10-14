@@ -1,6 +1,7 @@
 package me.zhengjie.config.db;
 
 
+import com.alibaba.druid.DbType;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.commons.collections4.map.HashedMap;
@@ -41,6 +42,7 @@ public class DateSourceConfig4Lbc {
     @ConfigurationProperties("spring.datasource.druid.lbc")
     public DataSource lbcDataSource() {
         DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+        dataSource.setDbType(DbType.sqlserver);
         System.out.println("LBC数据库dbtype：" + dataSource.getDbType());
         return dataSource;
     }
