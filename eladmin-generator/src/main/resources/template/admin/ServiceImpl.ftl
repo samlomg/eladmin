@@ -25,8 +25,7 @@ import me.zhengjie.exception.EntityExistException;
         </#if>
     </#list>
 </#if>
-import me.zhengjie.utils.ValidationUtil;
-import me.zhengjie.utils.FileUtil;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ${package}.repository.${className}Repository;
@@ -36,6 +35,9 @@ import ${package}.service.dto.${className}QueryCriteria;
 import ${package}.service.mapstruct.${className}Mapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 <#if !auto && pkColumnType = 'Long'>
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
@@ -43,25 +45,25 @@ import cn.hutool.core.util.IdUtil;
 <#if !auto && pkColumnType = 'String'>
 import cn.hutool.core.util.IdUtil;
 </#if>
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import cn.hutool.core.io.IoUtil;
+import me.zhengjie.utils.ValidationUtil;
+import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.QueryHelp;
-import java.util.List;
-import java.util.Map;
-import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import me.zhengjie.utils.PageResult;
-
 import java.io.IOException;
 import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
-import org.springframework.web.multipart.MultipartFile;
+
 
 /**
 * @website https://eladmin.vip
@@ -191,11 +193,11 @@ public class ${className}ServiceImpl implements ${className}Service {
             /**
             *临时存储
             */
-            private List<${changeClassName}> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+            private List<${className}> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
                 @Override
                 public void invoke(${className}Dto o, AnalysisContext analysisContext) {
-                    ${changeClassName} ${changeClassName}= ${changeClassName}Mapper.toEntity(o);
+                ${className} ${changeClassName}= ${changeClassName}Mapper.toEntity(o);
                     cachedDataList.add(${changeClassName});
                     saveData(${changeClassName});
                 }
@@ -205,7 +207,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 
                 }
 
-                private void saveData(${changeClassName} o) {
+                private void saveData(${className} o) {
                     log.info("{}条数据，开始存储数据库！", cachedDataList.size());
                     ${changeClassName}Repository.save(o);
                     log.info("存储数据库成功！");
