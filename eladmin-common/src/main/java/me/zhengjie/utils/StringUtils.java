@@ -240,7 +240,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     // 转换表名为Java类名
-    public static String convertToClassName(String tableName,String prefix) {
+    public static String convertToClassName(String tableName) {
         // Step 1: 检查是否为驼峰命名
         if (isCamelCase(tableName)) {
             // 如果是驼峰命名，直接返回，确保首字母大写
@@ -251,7 +251,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         tableName = tableName.toLowerCase();
 
         // Step 3: 去掉无效前缀（如有）
-        tableName = tableName.replaceFirst("^"+prefix, "");
+//        tableName = tableName.replaceFirst("^"+prefix, "");
 
         // Step 4: 处理下划线，将其转换为驼峰格式，同时保留数字
         String[] parts = tableName.split("_");

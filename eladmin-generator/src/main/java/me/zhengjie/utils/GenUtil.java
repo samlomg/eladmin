@@ -205,15 +205,11 @@ public class GenUtil {
         // 表名
         genMap.put("tableName", genConfig.getTableName());
         // 大写开头的类名
-        String className = StringUtils.convertToClassName(genConfig.getTableName(),genConfig.getPrefix());
+        String className = StringUtils.convertToClassName(
+                StringUtils.isNotEmpty(genConfig.getPrefix()) ? StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()) : genConfig.getTableName()
+        );
         // 小写开头的类名
         String changeClassName = StringUtils.uncapitalize(className);
-        // 判断是否去除表前缀
-        /*if (StringUtils.isNotEmpty(genConfig.getPrefix())) {
-            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
-            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
-            changeClassName = StringUtils.uncapitalize(changeClassName);
-        }*/
         // 保存类名
         genMap.put("className", className);
         // 保存小写开头的类名
