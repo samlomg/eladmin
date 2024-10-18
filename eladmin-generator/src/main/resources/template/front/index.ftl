@@ -33,9 +33,9 @@
       <crudOperation :permission="permission">
         <template slot="right">
           <importExcel
-                  :refresh="crud.refresh"
-                  :download-excel="downloadExcel"
-                  :import-excel-file="importExcelFile"
+            :refresh="crud.refresh"
+            :download-excel="downloadExcel"
+            :import-excel-file="importExcelFile"
           />
         </template>
       </crudOperation>
@@ -117,7 +117,9 @@
 <script>
 import crud${className} from '@/api/${changeClassName}'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
+<#if queryColumns?? && queryColumns?size gt 0>
 import rrOperation from '@crud/RR.operation'
+</#if>
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
@@ -126,7 +128,7 @@ import importExcel from '@/components/ImportExcel'
 const defaultForm = { <#if columns??><#list columns as column>${column.changeColumnName}: null<#if column_has_next>, </#if></#list></#if> }
 export default {
   name: '${className}',
-  components: { pagination, crudOperation, rrOperation, udOperation },
+  components: { pagination, crudOperation, <#if queryColumns?? && queryColumns?size gt 0>rrOperation, </#if>udOperation, importExcel },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   <#if hasDict>
   dicts: [<#if hasDict??><#list dicts as dict>'${dict}'<#if dict_has_next>, </#if></#list></#if>],
@@ -151,7 +153,8 @@ export default {
         </#if>
         </#list>
         </#if>
-      }<#if hasQuery>,
+      }<#if hasQuery>,</#if>
+      <#if hasQuery>
       queryTypeOptions: [
         <#if queryColumns??>
         <#list queryColumns as column>

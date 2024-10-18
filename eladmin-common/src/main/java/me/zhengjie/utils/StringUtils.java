@@ -240,7 +240,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     // 转换表名为Java类名
-    public static String convertToClassName(String tableName) {
+    public static String convertToCamelName(String tableName) {
         // Step 1: 检查是否为驼峰命名
         if (isCamelCase(tableName)) {
             // 如果是驼峰命名，直接返回，确保首字母大写
@@ -266,5 +266,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return className.toString();
     }
 
-    //首位字母小写
+    //首位字母大写
+    public static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
 }

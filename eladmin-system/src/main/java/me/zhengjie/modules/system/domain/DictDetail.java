@@ -51,7 +51,7 @@ public class DictDetail extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "字典值")
     private String value;
 
-    @Column(name = "dict_sort")
     @ApiModelProperty(value = "排序")
+    @Column(name = "dict_sort")
     private Integer dictSort = 999;
 }

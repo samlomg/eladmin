@@ -205,7 +205,7 @@ public class GenUtil {
         // 表名
         genMap.put("tableName", genConfig.getTableName());
         // 大写开头的类名
-        String className = StringUtils.convertToClassName(
+        String className = StringUtils.convertToCamelName(
                 StringUtils.isNotEmpty(genConfig.getPrefix()) ? StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()) : genConfig.getTableName()
         );
         // 小写开头的类名
@@ -249,10 +249,10 @@ public class GenUtil {
             listMap.put("columnKey", column.getKeyType());
             // 主键类型
             String colType = ColUtil.cloToJava(column.getColumnType());
-            // 小写开头的字段名
-            String changeColumnName = StringUtils.toCamelCase(column.getColumnName());
             // 大写开头的字段名
-            String capitalColumnName = StringUtils.toCapitalizeCamelCase(column.getColumnName());
+            String capitalColumnName = StringUtils.capitalizeFirstLetter(StringUtils.convertToCamelName(column.getColumnName()));
+            // 小写开头的字段名
+            String changeColumnName = StringUtils.uncapitalize(capitalColumnName);
             if (PK.equals(column.getKeyType())) {
                 // 存储主键类型
                 genMap.put("pkColumnType", colType);

@@ -52,9 +52,11 @@ public class SysLog implements Serializable {
     private String params;
 
     /** 日志类型 */
+    @Column(name = "log_type")
     private String logType;
 
     /** 请求ip */
+    @Column(name = "request_ip")
     private String requestIp;
 
     /** 地址 */
@@ -67,10 +69,12 @@ public class SysLog implements Serializable {
     private Long time;
 
     /** 异常详细  */
+    @Column(name = "exception_detail")
     private byte[] exceptionDetail;
 
     /** 创建日期 */
     @CreationTimestamp
+    @Column(name = "create_time")
     private Timestamp createTime;
 
     public SysLog(String logType, Long time) {

@@ -34,33 +34,41 @@ import java.io.Serializable;
 @Table(name="mnt_app")
 public class App extends BaseEntity implements Serializable {
 
-    @Id
+
+	@Id
 	@Column(name = "app_id")
 	@ApiModelProperty(value = "ID", hidden = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private Long id;
 
 	@ApiModelProperty(value = "名称")
-    private String name;
+	private String name;
 
 	@ApiModelProperty(value = "端口")
 	private int port;
 
+
 	@ApiModelProperty(value = "上传路径")
+	@Column(name = "upload_path")
 	private String uploadPath;
 
+
 	@ApiModelProperty(value = "部署路径")
+	@Column(name = "deploy_path")
 	private String deployPath;
 
+
 	@ApiModelProperty(value = "备份路径")
+	@Column(name = "backup_path")
 	private String backupPath;
 
 	@ApiModelProperty(value = "启动脚本")
+	@Column(name = "start_script")
 	private String startScript;
 
 	@ApiModelProperty(value = "部署脚本")
+	@Column(name = "deploy_script")
 	private String deployScript;
-
     public void copy(App source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
     }

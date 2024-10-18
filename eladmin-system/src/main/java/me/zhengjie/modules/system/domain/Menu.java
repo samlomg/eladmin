@@ -57,6 +57,7 @@ public class Menu extends BaseEntity implements Serializable {
     private String componentName;
 
     @ApiModelProperty(value = "排序")
+    @Column(name = "menu_sort")
     private Integer menuSort = 999;
 
     @ApiModelProperty(value = "组件路径")
@@ -86,9 +87,11 @@ public class Menu extends BaseEntity implements Serializable {
     private Long pid;
 
     @ApiModelProperty(value = "子节点数目", hidden = true)
+    @Column(name = "sub_count")
     private Integer subCount = 0;
 
     @ApiModelProperty(value = "外链菜单")
+    @Column(name = "i_frame")
     private Boolean iFrame;
 
     @Override

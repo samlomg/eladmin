@@ -43,7 +43,7 @@ public class DateSourceConfig4Eladmin {
     @ConfigurationProperties("spring.datasource.druid.eladmin")
     public javax.sql.DataSource eladminDataSource() {
         DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
-        dataSource.setDbType(DbType.mariadb);
+        dataSource.setDbType(DbType.mysql);
         System.out.println("eladmin:数据库dbtype：" + dataSource.getDbType());
         return dataSource;
     }

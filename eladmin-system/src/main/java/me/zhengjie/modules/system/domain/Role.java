@@ -71,6 +71,7 @@ public class Role extends BaseEntity implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "数据权限，全部 、 本级 、 自定义")
+    @Column(name = "data_scope")
     private String dataScope = DataScopeEnum.THIS_LEVEL.getValue();
 
     @Column(name = "level")

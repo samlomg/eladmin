@@ -25,18 +25,18 @@ export function edit(data) {
 }
 
 export function downloadExcel() {
-return request({
-url: 'api/${changeClassName}/downloadExcel',
-method: 'get',
-responseType: 'blob'
-})
+  return request({
+    url: 'api/${changeClassName}/downloadExcel',
+    method: 'get',
+    responseType: 'blob'
+  })
 }
 
 export function importExcelFile(data) {
-return request({
-url: 'api/${changeClassName}/importExcel',
-method: 'post',
-data
-})
+  return request({
+    url: 'api/${changeClassName}/importExcel',
+    method: 'post',
+    data
+  })
 }
 export default { add, edit, del, downloadExcel, importExcelFile }

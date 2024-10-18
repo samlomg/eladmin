@@ -71,6 +71,7 @@ public class User extends BaseEntity implements Serializable {
 
     @NotBlank
     @ApiModelProperty(value = "用户昵称")
+    @Column(name = "nick_name")
     private String nickName;
 
     @Email
@@ -86,9 +87,11 @@ public class User extends BaseEntity implements Serializable {
     private String gender;
 
     @ApiModelProperty(value = "头像真实名称",hidden = true)
+    @Column(name = "avatar_name")
     private String avatarName;
 
     @ApiModelProperty(value = "头像存储的路径", hidden = true)
+    @Column(name = "avatar_path")
     private String avatarPath;
 
     @ApiModelProperty(value = "密码")
@@ -99,6 +102,7 @@ public class User extends BaseEntity implements Serializable {
     private Boolean enabled;
 
     @ApiModelProperty(value = "是否为admin账号", hidden = true)
+    @Column(name = "is_admin")
     private Boolean isAdmin = false;
 
     @Column(name = "pwd_reset_time")

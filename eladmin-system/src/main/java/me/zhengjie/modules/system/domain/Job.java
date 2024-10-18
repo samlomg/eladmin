@@ -48,11 +48,13 @@ public class Job extends BaseEntity implements Serializable {
 
     @NotNull
     @ApiModelProperty(value = "岗位排序")
+    @Column(name = "job_sort")
     private Long jobSort;
 
     @NotNull
     @ApiModelProperty(value = "是否启用")
     private Boolean enabled;
+
 
     @Override
     public boolean equals(Object o) {

@@ -50,6 +50,7 @@ public class Dept extends BaseEntity implements Serializable {
     private Set<Role> roles;
 
     @ApiModelProperty(value = "排序")
+    @Column(name = "dept_sort")
     private Integer deptSort;
 
     @NotBlank
@@ -64,6 +65,7 @@ public class Dept extends BaseEntity implements Serializable {
     private Long pid;
 
     @ApiModelProperty(value = "子节点数目", hidden = true)
+    @Column(name = "sub_count")
     private Integer subCount = 0;
 
     @Override
