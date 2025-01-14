@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import crud${className} from '@/api/${changeClassName}'
+import crud${className}, { downloadExcel, importExcelFile }  from '@/api/${changeClassName}'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
 <#if queryColumns?? && queryColumns?size gt 0>
 import rrOperation from '@crud/RR.operation'
@@ -168,6 +168,8 @@ export default {
     }
   },
   methods: {
+    downloadExcel,
+    importExcelFile,
     // 钩子：在获取表格数据之前执行，false 则代表不获取数据
     [CRUD.HOOK.beforeRefresh]() {
       return true

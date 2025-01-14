@@ -15,6 +15,7 @@
 */
 package ${package}.service.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 <#if hasTimestamp>
 import java.sql.Timestamp;
@@ -48,6 +49,7 @@ public class ${className}Dto implements Serializable {
     @JSONField(serializeUsing = ToStringSerializer.class)
     </#if>
     </#if>
+    @ExcelProperty("${column.remark}")
     private ${column.columnType} ${column.changeColumnName};
     </#list>
 </#if>
